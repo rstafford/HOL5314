@@ -58,7 +58,69 @@ This Lab shows how to enable log capture and access the Kibana user interface (U
    
    ```bash
    kubectl get pods -n $NAMESPACE
-   ``` 
+   ```      
+   
+   Wait until all are in a Running State.
+   
+1. Install Coherence cluster with log capture enabled
+
+   > Note: In the following install we are pointing a temporary Coherence 
+   > image but normally you would use a secret and
+   > point to the Oracle Container Registry official image.
+                                                          
+   ```bash
+   helm install \
+   --namespace $NAMESPACE \
+   --name storage \
+   --set clusterSize=3 \
+   --set cluster=storage-tier-cluster \
+   --set logCaptureEnabled=true \
+   --set coherence.image=tmiddlet/coherence:12.2.1.3.3 \
+   coherence/coherence
+   ```                
+   
+   Use `helm ls` and `kubectl get pods -n $NAMESPACE` and wait for the pods to be ready.
+   
+1. Port-forward Kibana
+
+   Open a second terminal and ensure you run the following `setenv.sh` command.
+   
+      ```bash
+   . ./setenv.sh
+   ```   
+   
+   Then issue the following to port-forward the Kibana Port.
+   
+   ```bash
+   port-forward-kibana.sh $NAMESPACE
+   ```
+   ```console
+   Forwarding from 127.0.0.1:5601 -> 5601
+   Forwarding from [::1]:5601 -> 5601
+   ```     
+   
+1. Access Kibana using the following URL:
+
+   [http://127.0.0.1:5601/](http://127.0.0.1:5601/)
+   
+   > **Note:** It can take up to 2-3 minutes for the data to reach the Elasticsearch instance.
+
+Default Kibana Dashboards
+
+There are a number of Kibana dashboards created via the import process.
+* Coherence Operator - All Messages - Shows all Coherence Operator messages                                                |
+* Coherence Cluster - All Messages - Shows all messages                                                                   |
+* Coherence Cluster - Errors and Warnings - Shows only errors and warnings                                                       |
+* Coherence Cluster - Persistence - Shows partition related messages                                                    |
+* Coherence Cluster - Message Sources - Allows visualization of messages via the message source (Thread)                     |
+* Coherence Cluster - Configuration Messages - Shows configuration related messages                                                 |
+* Coherence Cluster - Network - Shows network related messages, such as communication delays and TCP ring disconnects |
+
+## Default Queries
+
+There are many queries related to common Coherence messages, warnings, and errors that are loaded and can be accessed via the `Discover` side-bar.
+   
+                                            
 helm ls
  (until running)
 
