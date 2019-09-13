@@ -6,38 +6,61 @@ After initial clone of the repository, carry out the following to setup your env
 
 1. Setup your environment
 
+   You will be asked for your assigned user number which will set the NAMESPACE environment variable
+   which is used in eac of the `helm` and `kubectl` commands.
+
    ```bash
    . ./setenv.sh
-   ```
+   ```           
+   
+   > Note: Ensure you run this command in any terminal you open.
 
 1. Run the following setup script to clone various repositories
 
    ```bash
-   ./add-helm-repo.sh
-   ``` 
+   ./setup.sh
+   ```       
    
-1. Create a namespace using the user number assigned to you. E.g. 01-20   
+   > Note: If there are any errors, please refer to the `logs` directory.
+   
+1. Create a namespace using the user number assigned to you. The `NAMESPACE` environment variable has been set in the `. ./setenv.sh` step above. 
 
    E.g. for user `01`:
    
    ```bash
-   kubectl create namespace ns-user-01
+   kubectl create namespace $NAMESPACE
    ```
 
-1. 
+# LAB 1 - Install the Coherence Operator and view Logs in Kibana
 
-   ```bash
+This Lab shows how to enable log capture and access the Kibana user interface (UI) to view the captured logs.
+
+1. Install Coherence Operator
+
+   Use the following command to install `coherence-operator` with log capture enabled.
    
-   ```
-helm install \
-   --namespace ns-user-00 \
+   ```bash
+   helm install \
+   --namespace $NAMESPACE \
    --name coherence-operator \
    --set logCaptureEnabled=true \
-   --set "targetNamespaces={ns-user-00}" \
+   --set "targetNamespaces={$NAMESPACE}" \
    coherence/coherence-operator
+   ```
 
+   List the installed releases:
+   
+   ```bash
+   helm ls
+   ```
+
+   List the installed pods:
+   
+   ```bash
+   kubectl get pods -n $NAMESPACE
+   ``` 
 helm ls
-kubectl get pods -n ns-user-00 (until running)
+ (until running)
 
 open new tab; source setenv
 run port-forward-kibana <namespace>

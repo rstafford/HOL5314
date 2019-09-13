@@ -17,9 +17,9 @@ if [ -z "$COHERENCE_HOME" ]; then
    exit
 fi
 
-PWD=`pwd`
-mkdir -p $PWD/logs
-exec 2>&1 > $PWD/logs/setup.log
+DIR=`pwd`
+mkdir -p DIR/logs
+exec 2>&1 > DIR/logs/setup.log
 
 echo "Adding Helm Repositories"
 
@@ -39,7 +39,7 @@ echo "Cloning Coherence-Demo"
 git clone https://github.com/coherence-community/coherence-demo.git
 
 echo "Unzipping Coherence"
-COHERENCE_ZIP=$PWD/zip/coherence-java-12.2.1.3.3b74317.zip
+COHERENCE_ZIP=DIR/zip/coherence-java-12.2.1.3.3b74317.zip
 unzip $COHERENCE_ZIP
 
 if [ ! -d $DIR/coherence ] ; then

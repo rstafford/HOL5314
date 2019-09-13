@@ -20,4 +20,7 @@ On first login to your HOL machine, please carry out the following from a termin
    $ cd HOL5314
    ```          
    
-4. Follow the instructions in the file `README.md` to complete your LAB.  
+4. Follow the instructions in the file [README.md](README.md) to complete your LAB.   
+
+   > Note: Please open this using FireFox: [https://github.com/rstafford/HOL5314](https://github.com/rstafford/HOL5314).
+                                                                                           >
