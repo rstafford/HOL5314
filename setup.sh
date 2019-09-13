@@ -17,7 +17,7 @@ if [ -z "$COHERENCE_HOME" ]; then
    exit
 fi
 
-$DIR=`pwd`
+DIR=`pwd`
 mkdir -p $DIR/logs
 exec 2>&1 > $DIR/logs/setup.log
 
