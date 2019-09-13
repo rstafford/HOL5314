@@ -19,7 +19,7 @@ fi
 
 DIR=`pwd`
 mkdir -p $DIR/logs
-exec 2>&1 > $DIR/logs/setup.log
+exec | tee  $DIR/logs/setup.log 2>&1
 
 echo "Adding Helm Repositories"
 
@@ -38,9 +38,9 @@ cd ..
 echo "Cloning Coherence-Demo"
 git clone https://github.com/coherence-community/coherence-demo.git
 
+cd $DIR
 echo "Unzipping Coherence"
-COHERENCE_ZIP=$DIR/zip/coherence-java-12.2.1.3.3b74317.zip
-unzip $COHERENCE_ZIP
+unzip $DIR/zip/coherence-java-12.2.1.3.3b74317.zip
 
 if [ ! -d $DIR/coherence ] ; then
    echo "Coherence was not correctly unzipped"
@@ -53,14 +53,12 @@ mvn install:install-file -Dfile=$COHERENCE_HOME/lib/coherence.jar      -DpomFile
 mvn install:install-file -Dfile=$COHERENCE_HOME/lib/coherence-rest.jar -DpomFile=$COHERENCE_HOME/plugins/maven/com/oracle/coherence/coherence-rest/12.2.1/coherence-rest.12.2.1.pom
 
 echo "Building Coherence Operator Samples"
-cd cohrence-operator
+cd $DIR/../coherence-operator/docs/samples
 mvn clean install -DskipTests -Dcoherence.version=12.2.1-3-3
 check_result "coherence-operator build"
-cd ..
 
 echo "Building Coherence Demo"
-cd coherence-demo
+cd $DIR/../coherence-demo
 mvn clean install -DskipTests -Dcoherence.version=12.2.1-3-3 -P docker
 check_result "coherence-demo build"
 
-cd ..
