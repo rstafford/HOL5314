@@ -1,13 +1,34 @@
-# HOL5314
+# HOL5314 - Coherence Operator Hands-On Lab
 
-git clone https://github.com/rstafford/HOL5314.git
+# Initial "Once-Only" Setup
 
-. ./setenv.sh
+After initial clone of the repository, carry out the following to setup your environment for the lab.
 
-./add-helm-repo.sh
+1. Setup your environment
 
-kubectl create namespace ns-user-00
+   ```bash
+   . ./setenv.sh
+   ```
 
+1. Run the following setup script to clone various repositories
+
+   ```bash
+   ./add-helm-repo.sh
+   ``` 
+   
+1. Create a namespace using the user number assigned to you. E.g. 01-20   
+
+   E.g. for user `01`:
+   
+   ```bash
+   kubectl create namespace ns-user-01
+   ```
+
+1. 
+
+   ```bash
+   
+   ```
 helm install \
    --namespace ns-user-00 \
    --name coherence-operator \

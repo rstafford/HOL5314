@@ -1,1 +1,0 @@
-https://github.com/oracle/coherence-operator.git|v1.0.0
