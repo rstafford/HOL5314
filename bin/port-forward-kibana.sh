@@ -4,7 +4,7 @@ trap "exit" INT
 
 if [ $# -ne 1 ] ; then
    echo "Usage: $0 [namespace]"   
-   fi
+   exit 1
 fi
 namespace=$1
    
