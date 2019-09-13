@@ -31,7 +31,9 @@ After initial clone of the repository, carry out the following to setup your env
    kubectl create namespace $NAMESPACE
    ```
 
-# LAB 1 - Install the Coherence Operator and view Logs in Kibana
+# LAB Guides
+
+## LAB 1 - Install the Coherence Operator and view Logs in Kibana
 
 This Lab shows how to enable log capture and access the Kibana user interface (UI) to view the captured logs.
 
@@ -120,6 +122,7 @@ There are a number of Kibana dashboards created via the import process.
 
 There are many queries related to common Coherence messages, warnings, and errors that are loaded and can be accessed via the `Discover` side-bar.
    
+## LAB 2 - Install the Coherence Operator and view Logs in Kibana
                                             
 helm ls
  (until running)
