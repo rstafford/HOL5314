@@ -273,6 +273,8 @@ The steps to run the application on Kubernetes comprises the following Helm char
 
    [http://127.0.0.1:8080/application/index.html](http://127.0.0.1:8080/application/index.html)  
    
+   > **Note**: You can use `Tools->Disable Insight` to stop messages coming up every time you run any commands in the Demo.
+                                                                                                                                                                                                   
 1. Scale the Application
   
    Scale the application using `kubectl`. When running the application in Kubernetes, 
