@@ -102,7 +102,7 @@ This Lab shows how to enable log capture and access the Kibana user interface (U
    Forwarding from [::1]:5601 -> 5601
    ```     
    
-1. Access Kibana using the following URL:
+1. Access Kibana using the following URL and explore the Dashboards.
 
    [http://127.0.0.1:5601/](http://127.0.0.1:5601/)
    
@@ -112,7 +112,7 @@ This Lab shows how to enable log capture and access the Kibana user interface (U
  
    **Default Kibana Dashboards**
                                                                                                                                                                                                
-   There are a number of Kibana dashboards created via the import process.
+   There are a number of Kibana dashboards created via the import process:
    * Coherence Operator - All Messages - Shows all Coherence Operator messages                                             
    * Coherence Cluster - All Messages - Shows all messages                                                             
    * Coherence Cluster - Errors and Warnings - Shows only errors and warnings                                                   
