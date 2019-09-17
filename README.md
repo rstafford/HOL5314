@@ -156,7 +156,7 @@ This Lab shows how to enable log capture and access the Kibana user interface (U
    mvn exec:java -Dcoherence.version=12.2.1-3-3
    ```
 
-   Run the following `CohQL` commands to insert data into the cluster.
+   Run the following `CohQL` commands (one at a time) to insert data into the cluster.
 
    ```sql
    insert into 'test' key('key-1') value('value-1');
@@ -312,7 +312,7 @@ The steps to run the application on Kubernetes comprises the following Helm char
 
    The following features are available to demonstrate in the application:
 
-   * Dynamically add or remove cluster members and observe the data repartition and recover automatically.
+   * Dynamically add or remove cluster members and observe the data repartition and recover automatically (via `kubectl scale`)
    * Create and recover snapshots from the **Persistence** menu.
    * Enable real-time price updates.
    * Enable or disable indexes for queries.
@@ -389,10 +389,11 @@ The version 2.0.0 cache config and interceptor can be found below:
    mvn exec:java -Dcoherence.version=12.2.1-3-3
    ```
 
-   Run the following CohQL commands to insert data into the cluster:
+   Run the following CohQL commands (one at a time) to insert data into the cluster:
 
    ```sql
-   insert into 'test' key('key-1') value('value-1');
+   insert into 'test' key('key-1') value('value-1'); 
+   
    insert into 'test' key('key-2') value('value-2');
 
    select key(), value() from 'test';  
