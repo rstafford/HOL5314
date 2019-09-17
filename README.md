@@ -88,7 +88,7 @@ This Lab shows how to enable log capture and access the Kibana user interface (U
    
 1. Port-forward Kibana
 
-   Open a second terminal and ensure you run the following `setenv.sh` command.
+   Open a second terminal, ensure you are in the `HOL5314` directory and run the following `setenv.sh` command.
    
    ```bash
    . ./setenv.sh
@@ -128,7 +128,7 @@ This Lab shows how to enable log capture and access the Kibana user interface (U
    
 3. Port forward the proxy port on the storage-coherence-0 pod using the `kubectl` command:
 
-   Open a third terminal and ensure you run the following `setenv.sh` command.
+   Open a third terminal, ensure you are in the `HOL5314` directory and ensure you run the following `setenv.sh` command.
    
    ```bash
    . ./setenv.sh
