@@ -97,7 +97,8 @@ This Lab shows how to enable log capture and access the Kibana user interface (U
    Then issue the following to port-forward the Kibana Port:
    
    ```bash
-   port-forward-kibana.sh $NAMESPACE
+   port-forward-kibana.sh $NAMESPACE    
+   
    Forwarding from 127.0.0.1:5601 -> 5601
    Forwarding from [::1]:5601 -> 5601
    ```     
@@ -158,7 +159,8 @@ This Lab shows how to enable log capture and access the Kibana user interface (U
    ```sql
    insert into 'test' key('key-1') value('value-1');
 
-   select key(), value() from 'test';
+   select key(), value() from 'test';   
+   
    Results
    ["key-1", "value-1"]
 
@@ -388,7 +390,8 @@ The version 2.0.0 cache config and interceptor can be found below:
    insert into 'test' key('key-1') value('value-1');
    insert into 'test' key('key-2') value('value-2');
 
-   select key(), value() from 'test';
+   select key(), value() from 'test';  
+   
    Results
    ["key-1", "value-1"]
    ["key-2", "value-2"]
@@ -452,7 +455,8 @@ The version 2.0.0 cache config and interceptor can be found below:
    ```sql
    insert into 'test' key('key-3') value('value-3');
 
-   select key(), value() from 'test';
+   select key(), value() from 'test'; 
+   
    Results
    ["key-1", "value-1"]
    ["key-3", "VALUE-3"]
