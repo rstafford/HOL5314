@@ -11,7 +11,7 @@ On first login to your HOL machine, please carry out the following from a termin
 2. Issue the following to clone the following repository:
 
    ```bash
-   $ git clone https://github.com/rstafford/HOL5314.git   
+   $ git clone https://github.com/rstafford/HOL5314  
    ```          
    
 3. Change to the HOL5314 directory using:
