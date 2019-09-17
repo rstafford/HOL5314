@@ -6,8 +6,9 @@ After initial clone of the repository, carry out the following to setup your env
 
 1. Setup your environment
 
-   You will be asked for your assigned user number which will set the NAMESPACE environment variable
-   which is used in each of the `helm` and `kubectl` commands.
+   This script will prompt for your assigned user number which will set the NAMESPACE environment variable
+   which is used in each of the `helm` and `kubectl` commands. Please ensure you use the same number when opening 
+   additional terminals during the labs.
 
    ```bash
    . ./setenv.sh
