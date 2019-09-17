@@ -275,9 +275,9 @@ The steps to run the application on Kubernetes comprises the following Helm char
    
    > **Note**: You can use `Tools->Disable Insight` to stop messages coming up every time you run any commands in the Demo.
                                                                                                                                                                                                    
-1. Scale the Application
+1. Scale the Application using `kubectl`.
   
-   Scale the application using `kubectl`. When running the application in Kubernetes, 
+   When running the application in Kubernetes, 
    the **Add Server** and **Remove Server** options are not available. You need to use `kubectl` 
    to scale the application.
 
