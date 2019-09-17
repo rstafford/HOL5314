@@ -166,7 +166,8 @@ This Lab shows how to enable log capture and access the Kibana user interface (U
    Results
    ["key-1", "value-1"]
 
-   select count() from 'test';
+   select count() from 'test';  
+   
    Results
    1
    ```      
@@ -443,6 +444,10 @@ The version 2.0.0 cache config and interceptor can be found below:
 1. Verify the data through CohQL commands.
 
    After the upgrade is complete, re-run CohQL and execute the following commands in the CohQL session:
+      
+   ```bash
+   mvn exec:java -Dcoherence.version=12.2.1-3-3
+   ```
 
    ```sql
    select key(), value() from 'test';
