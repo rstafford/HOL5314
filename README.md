@@ -370,7 +370,7 @@ The version 2.0.0 cache config and interceptor can be found below:
    After the installation completes, list the pods:
 
    ```bash
-   $ kubectl get pods -n $NAMESPACE
+   kubectl get pods -n $NAMESPACE
    ```
 
    All the three storage-${NAMESPACE}-coherence-0/1/2 pods should be in running state - `2/2`.
@@ -384,7 +384,7 @@ The version 2.0.0 cache config and interceptor can be found below:
 1. Connect via CohQL commands and execute the following command in the terminal you changed directory.
 
    ```bash
-   $ mvn exec:java -Dcoherence.version=12.2.1-3-3
+   mvn exec:java -Dcoherence.version=12.2.1-3-3
    ```
 
    Run the following CohQL commands to insert data into the cluster:
@@ -437,13 +437,13 @@ The version 2.0.0 cache config and interceptor can be found below:
 
 1. Verify the data through CohQL commands.
 
-   When the upgrade is running, you can re-run CohQL and execute the following commands in the CohQL session:
+   After the upgrade is complete re-run CohQL and execute the following commands in the CohQL session:
 
    ```sql
    select key(), value() from 'test';
    ```
 
-   You can note that the data always remains the same.
+   You can note that the data remains the same.
 
    > **Note**: Your port-forward fails when the storage-$NAMESPACE-coherence-0` pod restarts. 
    > You have to restart it.
