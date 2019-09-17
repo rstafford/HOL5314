@@ -437,7 +437,7 @@ The version 2.0.0 cache config and interceptor can be found below:
 
 1. Verify the data through CohQL commands.
 
-   After the upgrade is complete re-run CohQL and execute the following commands in the CohQL session:
+   After the upgrade is complete, re-run CohQL and execute the following commands in the CohQL session:
 
    ```sql
    select key(), value() from 'test';
@@ -479,7 +479,7 @@ The version 2.0.0 cache config and interceptor can be found below:
 
    The output shows that the version 2.0.0 image is now present.  
   
-1. (Optionally) you could issue the helm upgrade to downgrade the image back to 1.0.0 version.
+1. (Optionally) Issue the helm upgrade to downgrade the image back to 1.0.0 version.
 
 1. Uninstall the Coherence Charts
 
