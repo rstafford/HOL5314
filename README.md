@@ -485,5 +485,17 @@ The version 2.0.0 cache config and interceptor can be found below:
    
 1. Ensure you stop the port-forward command using `CTRL-C`.  
                                            
+## Remove the Coherence Operator - When the LAB has finished
 
+When you have finished the lab, remove your coherence-operator helm release.
+
+```bash
+helm delete coherence-operator-$NAMESPACE --purge
+```             
+
+Stop any port-forwards you had started and delete your namespace using:
+
+```bash
+kubectl delete namespace $NAMESPACE
+```
 
