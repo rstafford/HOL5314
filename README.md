@@ -261,7 +261,8 @@ The steps to run the application on Kubernetes comprises the following Helm char
       --set store.pof.config=pof-config.xml \
       --set store.wka=coherence-demo-storage-${NAMESPACE}-headless \
       --set store.javaOpts="-Dcoherence.distributed.localstorage=false"  \
-      --set store.maxHeap=512m \
+      --set store.maxHeap=512m \     
+      --set logCaptureEnabled=true \
       --set userArtifacts.image=tmiddlet/coherence-demo-sidecar:3.0.0-SNAPSHOT \
       --set coherence.image=tmiddlet/coherence:12.2.1.3.3 \
       coherence/coherence
