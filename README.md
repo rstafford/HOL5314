@@ -66,7 +66,7 @@ This Lab shows how to enable log capture and access the Kibana user interface (U
    kubectl get pods -n $NAMESPACE
    ```      
    
-   Wait until all are in a Running State.
+   Wait until all are in a Running State and all pods are shown as `1/1` or `2/2`.
    
 1. Install Coherence cluster with log capture enabled
 
@@ -233,7 +233,8 @@ The steps to run the application on Kubernetes comprises the following Helm char
       --set store.cacheConfig=cache-config.xml \
       --set store.pof.config=pof-config.xml \
       --set store.javaOpts="-Dwith.http=false" \
-      --set store.maxHeap=512m \
+      --set store.maxHeap=512m \        
+      --set logCaptureEnabled=true \
       --set userArtifacts.image=tmiddlet/coherence-demo-sidecar:3.0.0-SNAPSHOT \
       --set coherence.image=tmiddlet/coherence:12.2.1.3.3 \
       coherence/coherence
@@ -266,7 +267,7 @@ The steps to run the application on Kubernetes comprises the following Helm char
       coherence/coherence
    ```  
 
-1. Port Forward the HTTP of the demo application
+1. Port Forward the HTTP port of the demo application
 
    ```bash
    kubectl port-forward --namespace $NAMESPACE coherence-demo-app-${NAMESPACE}-0 8080:8080
