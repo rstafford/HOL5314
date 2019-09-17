@@ -38,7 +38,7 @@ This Lab shows how to enable log capture and access the Kibana user interface (U
 
 > Note: Because many people are using the same cluster, helm release names need to be unique so
 > we are suffixing any helm names with your `NAMESPACE`.
-> If you do not specify a name, then a generatet one will be created.
+> If you do not specify a name, then a generated one will be created, but for these labs we are specifying them to avoid confusion.
 
 1. Install Coherence Operator
 
