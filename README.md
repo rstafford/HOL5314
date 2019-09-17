@@ -261,12 +261,12 @@ The steps to run the application on Kubernetes comprises the following Helm char
       --set store.wka=coherence-demo-storage-${NAMESPACE}-headless \
       --set store.javaOpts="-Dcoherence.distributed.localstorage=false"  \
       --set store.maxHeap=512m \
-      --set userArtifacts.image=coherence-demo-sidecar:3.0.0-SNAPSHOT \
+      --set userArtifacts.image=tmiddlet/coherence-demo-sidecar:3.0.0-SNAPSHOT \
       --set coherence.image=tmiddlet/coherence:12.2.1.3.3 \
       coherence/coherence
    ```  
 
-1. Port Forward the HTTP Port
+1. Port Forward the HTTP of the demo application
 
    ```bash
    kubectl port-forward --namespace $NAMESPACE coherence-demo-app-${NAMESPACE}-0 8080:8080
