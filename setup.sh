@@ -40,7 +40,7 @@ git clone https://github.com/coherence-community/coherence-demo.git
 
 cd $DIR
 echo "Unzipping Coherence"
-unzip -f $DIR/zip/coherence-java-12.2.1.3.3b74317.zip
+unzip -o $DIR/zip/coherence-java-12.2.1.3.3b74317.zip
 
 if [ ! -d $DIR/coherence ] ; then
    echo "Coherence was not correctly unzipped"
