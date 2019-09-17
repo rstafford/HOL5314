@@ -233,14 +233,14 @@ The steps to run the application on Kubernetes comprises the following Helm char
       --set store.cacheConfig=cache-config.xml \
       --set store.pof.config=pof-config.xml \
       --set store.javaOpts="-Dwith.http=false" \
-      --set store.maxHeap=512m \        
+      --set store.maxHeap=512m \
       --set logCaptureEnabled=true \
       --set userArtifacts.image=tmiddlet/coherence-demo-sidecar:3.0.0-SNAPSHOT \
       --set coherence.image=tmiddlet/coherence:12.2.1.3.3 \
       coherence/coherence
    ```
  
-   Use `helm ls` and `kubectl get pods -n $NAMESPACE` and wait for the Coherence pod to be ready.  
+   Use `helm ls` and `kubectl get pods -n $NAMESPACE` and wait for the Coherence pod to be ready `2/2`.  
    
 1. Install the Application Tier
 
@@ -261,7 +261,7 @@ The steps to run the application on Kubernetes comprises the following Helm char
       --set store.pof.config=pof-config.xml \
       --set store.wka=coherence-demo-storage-${NAMESPACE}-headless \
       --set store.javaOpts="-Dcoherence.distributed.localstorage=false"  \
-      --set store.maxHeap=512m \     
+      --set store.maxHeap=512m \
       --set logCaptureEnabled=true \
       --set userArtifacts.image=tmiddlet/coherence-demo-sidecar:3.0.0-SNAPSHOT \
       --set coherence.image=tmiddlet/coherence:12.2.1.3.3 \
