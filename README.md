@@ -216,12 +216,6 @@ The steps to run the application on Kubernetes comprises the following Helm char
    > Note: for the purposes of this Lab, the Docker image has already been created and has been pushed as 
    > `tmiddlet/coherence-demo-sidecar:3.0.0-SNAPSHOT`.
    > If you wish to build it, please follow the instructions in step 3 [here](https://github.com/coherence-community/coherence-demo#run-the-application-on-kubernetes-coherence-12213x).
-
-   Use the following Docker command to see the sidecar image on your machine.
-   
-   ```bash
-   docker images
-   ```
       
 1. Install the Coherence Cluster Tier
 

@@ -57,8 +57,3 @@ cd $DIR/../coherence-operator/docs/samples
 mvn clean install -DskipTests -Dcoherence.version=12.2.1-3-3
 check_result "coherence-operator build"
 
-echo "Building Coherence Demo"
-cd $DIR/../coherence-demo
-mvn clean install -DskipTests -Dcoherence.version=12.2.1-3-3 -Dmaven.version=3.5.0 -P docker
-check_result "coherence-demo build"
-
