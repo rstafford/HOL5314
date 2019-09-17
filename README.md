@@ -479,6 +479,7 @@ The version 2.0.0 cache config and interceptor can be found below:
 
    The output shows that the version 2.0.0 image is now present.  
   
+1. (Optionally) you could issue the helm upgrade to downgrade the image back to 1.0.0 version.
 
 1. Uninstall the Coherence Charts
 
@@ -486,7 +487,7 @@ The version 2.0.0 cache config and interceptor can be found below:
    helm delete storage-${NAMESPACE} --purge
    ```        
    
-1. Ensure you stop the HTTP port-forward commands using `CTRL-C`.  
+1. Ensure you stop the port-forward command using `CTRL-C`.  
                                            
 
 
