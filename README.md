@@ -7,7 +7,7 @@ After initial clone of the repository, carry out the following to setup your env
 1. Setup your environment
 
    You will be asked for your assigned user number which will set the NAMESPACE environment variable
-   which is used in eac of the `helm` and `kubectl` commands.
+   which is used in each of the `helm` and `kubectl` commands.
 
    ```bash
    . ./setenv.sh
@@ -109,8 +109,10 @@ This Lab shows how to enable log capture and access the Kibana user interface (U
    
    > **Note:** It can take up to 2-3 minutes for the data to reach the Elasticsearch instance.
 
+   > **Note:** If you get a `broken pipe` stop the port-forward via CTRL-C and restart it.
+ 
    **Default Kibana Dashboards**
-
+                                                                                                                                                                                               
    There are a number of Kibana dashboards created via the import process.
    * Coherence Operator - All Messages - Shows all Coherence Operator messages                                             
    * Coherence Cluster - All Messages - Shows all messages                                                             
@@ -133,10 +135,11 @@ This Lab shows how to enable log capture and access the Kibana user interface (U
    . ./setenv.sh
    ```   
 
-   Then issue the following to port-forward the default Coherence*Extend port:
+   Then issue the following to port-forward the default Coherence*Extend port. (Normally you would
+   use a load balancer for this, but we are just using port-forward for this demonstration)
    
    ```bash
-   $ kubectl port-forward -n $NAMESPACE storage-${NAMESPACE}-coherence-0 20000:20000
+   kubectl port-forward -n $NAMESPACE storage-${NAMESPACE}-coherence-0 20000:20000
    ```
 
 4. Connect via CohQL and run the following commands:
@@ -144,11 +147,11 @@ This Lab shows how to enable log capture and access the Kibana user interface (U
    In your first terminal, change to the following directory:
    
    ```bash
-   cd ../coherence-operator/docs/samples/coherence-deployments/extend/default
+   cd ~/coherence-operator/docs/samples/coherence-deployments/extend/default
    ```
    
    ```bash
-   $ mvn exec:java
+   mvn exec:java -Dcoherence.version=12.2.1-3-3
    ```
 
    Run the following `CohQL` commands to insert data into the cluster.
@@ -163,17 +166,32 @@ This Lab shows how to enable log capture and access the Kibana user interface (U
    select count() from 'test';
    Results
    1
+   ```      
+   
+   Type `quit` to exit CohQL and change back to the base directory:
+   
+   ```bash
+   cd ~/HOL5314
    ```
     
-1. Uninstall the Coherence Chart
+1. Uninstall the Coherence helm release
 
-   Before you continue to the next lab, use the following commands to delete the chart installed in this sample:
+   Before you continue to the next lab, use the following commands to delete the 
+   chart installed in this sample:
 
    ```bash
    helm delete storage-${NAMESPACE} --purge
-   ```     
+   ```                           
    
-1. Ensure you stop the port-forward commands using `CTRL-C`.   
+   Use the following command to ensure all the pods have terminated.
+   
+   ```bash
+   kubectl get pods -n $NAMESPACE
+   ```    
+   
+1. Ensure you stop the port-forward for Coherence*Extend command using `CTRL-C`.
+
+   > **Note:** Leave the port-forward for Kibana running as we will use this in the next Lab.   
   
 ## LAB 2 - Install the Coherence Demo Application
    
