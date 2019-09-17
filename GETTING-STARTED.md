@@ -24,7 +24,7 @@ On first login to your HOL machine, please carry out the following from a termin
 
    > Note: Please open this using FireFox: [https://github.com/rstafford/HOL5314](https://github.com/rstafford/HOL5314).
    
-   > To copy and paste commands from the instructions to the terminal, use the following keyboard shortcuts in the Oracle Linux VirtualBox VM:
-   > Copy from Firefox: <Ctrl>-c
+   > To copy and paste commands from the instructions to the terminal, use the following keyboard shortcuts in the Oracle Linux VirtualBox VM:  
+   > Copy from Firefox: <Ctrl>-c  
    > Paste in Terminal: <Shift>+<Ctrl>-v
                                                                                           
