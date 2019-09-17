@@ -212,13 +212,19 @@ The steps to run the application on Kubernetes comprises the following Helm char
    The Oracle Coherence Operator requires a sidecar Docker image to be built containing 
    he classes and configuration files required by the application.
 
-   > Note: for the purposes of this Lab, the Docker image has already been created and is available as
+   > Note: for the purposes of this Lab, the Docker image has already been created and has been pushed as 
    > `tmiddlet/coherence-demo-sidecar:3.0.0-SNAPSHOT`.
    > If you wish to build it, please follow the instructions in step 3 [here](https://github.com/coherence-community/coherence-demo#run-the-application-on-kubernetes-coherence-12213x).
 
-1. Install the Coherence Cluster
-
+   Use the following Docker command to see the sidecar image on your machine.
+   
    ```bash
+   docker images
+   ```
+      
+1. Install the Coherence Cluster Tier
+
+   ```bash    
    helm install \
       --namespace $NAMESPACE \
       --name coherence-demo-storage-${NAMESPACE} \
@@ -238,6 +244,11 @@ The steps to run the application on Kubernetes comprises the following Helm char
 1. Install the Application Tier
 
    Install the application tier using the following command:
+   
+   > **Note**: We set the application tier to storage-disabled as well as well as set the Well Known Address (WKA)
+   > using `--set store.wka=coherence-demo-storage-${NAMESPACE}-headless` to point to the DNS address 
+   > `coherence-demo-storage-${NAMESPACE}-headless`
+   > which points to all the cluster members to ensure the application tier joins the cluster.      
 
    ```bash
    helm install \
