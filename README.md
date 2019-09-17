@@ -127,6 +127,8 @@ This Lab shows how to enable log capture and access the Kibana user interface (U
    There are many queries related to common Coherence messages, warnings, and errors that are loaded 
    and can be accessed via the `Discover` side-bar.
    
+   Once the `Discover` tab is selected, click on `Open` in the top right to see the available queries.
+   
 3. Port forward the proxy port on the storage-coherence-0 pod using the `kubectl` command:
 
    Open a third terminal, ensure you are in the `HOL5314` directory and ensure you run the following `setenv.sh` command.
@@ -262,6 +264,9 @@ The steps to run the application on Kubernetes comprises the following Helm char
       --set coherence.image=tmiddlet/coherence:12.2.1.3.3 \
       coherence/coherence
    ```  
+   
+   Use `helm ls` and `kubectl get pods -n $NAMESPACE` and wait for the Coherence pod to be ready `2/2`.  
+ 
 
 1. Port Forward the HTTP port of the demo application
 
