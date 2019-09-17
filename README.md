@@ -286,19 +286,25 @@ The steps to run the application on Kubernetes comprises the following Helm char
    the **Add Server** and **Remove Server** options are not available. You need to use `kubectl` 
    to scale the application.
 
-   Scale the application to two nodes:
+   Scale the application to three nodes:
 
    ```bash
-   kubectl scale statefulsets coherence-demo-storage-${NAMESPACE} --namespace $NAMESPACE --replicas=2
+   kubectl scale statefulsets coherence-demo-storage-${NAMESPACE} --namespace $NAMESPACE --replicas=3
    ```   
    
    Check the number of running pods using:   
       
    ```bash
    kubectl get pods -n $NAMESPACE
-   ```      
+   ```                              
+   
+   You should also see the UI update to reflect the number of nodes.
                                           
 1. View the application logs via Kibana.
+
+   Open Kibana and click on the `Coherence Cluster - All Messages` dashboard.
+   
+   Also explore the other dashboards.
 
 1. Explore the Application
 
@@ -313,15 +319,174 @@ The steps to run the application on Kubernetes comprises the following Helm char
 1. Uninstall the Coherence Charts
 
    ```bash
-   helm delete coherence-demo-storage-${NAMESPACE} --purge
+   helm delete coherence-demo-storage-${NAMESPACE} coherence-demo-app-${NAMESPACE} --purge
    ```        
-   
-   ```bash
-   helm delete coherence-demo-app-${NAMESPACE} --purge
-   ```     
    
 1. Ensure you stop the HTTP port-forward commands using `CTRL-C`.  
                                            
-## LAB 3 - ???
+## LAB 3 - Issue a Safe Rolling Upgrade
+
+The safe rolling upgrade feature allows you to instruct Kubernetes, through the operator, 
+to replace the currently installed version of your application classes with a different one. Kubernetes does not verify whether the classes are new or old. It checks whether the image can be pulled by the cluster and image has a docker tag. The operator also ensures that the replacement is done without data loss or interruption of service.
+
+This sample initially deploys version 1.0.0 of the sidecar Docker image and then does a rolling upgrade to
+version 2.0.0 of the sidecar image which introduces a server side Interceptor to modify 
+data to ensure it is stored as uppercase.
+
+As before, the Docker images, version 1.0.0 and version 2.0.0 Docker images already been created and pushed to:
+
+   * `tmiddlet/rolling-upgrade-sample:1.0.0`
+
+   * `tmiddlet/rolling-upgrade-sample:2.0.0`
+
+`tmiddlet/rolling-upgrade-sample:1.0.0` is the initial image installed in the chart.
+
+The version 2.0.0 cache config and interceptor can be found below:
+
+* [Version 2.0.0 cache config](https://github.com/oracle/coherence-operator/blob/gh-pages/docs/samples/operator/rolling-upgrade/src/main/resources/conf/v2/storage-cache-config.xml)
+* [Version 2.0.0 interceptor](https://github.com/oracle/coherence-operator/blob/gh-pages/docs/samples/operator/rolling-upgrade/src/main/java/com/oracle/coherence/examples/UppercaseInterceptor.java)
+
+1. In a terminal where you have run `. ./setenv.sh`, change to the samples directory.
+
+   ```bash
+   cd ~/coherence-operator/docs/samples/operator/rolling-upgrade/
+   ```  
+   
+1. Install the Coherence cluster with tmiddlet/rolling-upgrade-sample:1.0.0 image as a sidecar:
+
+   ```bash
+   helm install \
+      --namespace $NAMESPACE \
+      --name storage-${NAMESPACE} \
+      --set clusterSize=3 \
+      --set cluster=rolling-upgrade-cluster \
+      --set store.cacheConfig=storage-cache-config.xml \
+      --set logCaptureEnabled=true \
+      --set coherence.image=tmiddlet/coherence:12.2.1.3.3 \
+      --set userArtifacts.image=tmiddlet/rolling-upgrade-sample:1.0.0 \
+      coherence/coherence
+   ```
+
+   After the installation completes, list the pods:
+
+   ```bash
+   $ kubectl get pods -n $NAMESPACE
+   ```
+
+   All the three storage-${NAMESPACE}-coherence-0/1/2 pods should be in running state - `2/2`.
+                                                    
+1. Port forward the proxy port on the `storage-${NAMESPACE}-coherence-0` pod:
+
+   ```bash
+   kubectl port-forward -n $NAMESPACE storage-${NAMESPACE}-coherence-0 20000:20000
+   ```
+
+1. Connect via CohQL commands and execute the following command in the terminal you changed directory.
+
+   ```bash
+   $ mvn exec:java -Dcoherence.version=12.2.1-3-3
+   ```
+
+   Run the following CohQL commands to insert data into the cluster:
+
+   ```sql
+   insert into 'test' key('key-1') value('value-1');
+   insert into 'test' key('key-2') value('value-2');
+
+   select key(), value() from 'test';
+   Results
+   ["key-1", "value-1"]
+   ["key-2", "value-2"]
+   ```                   
+   
+   Quit CohQL.
+ 
+1. Upgrade the helm release to use the `tmiddlet/rolling-upgrade-sample:2.0.0` image.
+
+   Use the following arguments to upgrade to version 2.0.0 of the image:
+
+   * `--reuse-values` - specifies to reuse all previous values associated with the release
+
+   * `--set userArtifacts.image=tmiddlet/rolling-upgrade-sample:2.0.0` - the new artifact version
+
+   ```bash
+   helm upgrade storage-${NAMESPACE} coherence/coherence \
+      --namespace sample-coherence-ns \
+      --reuse-values \
+      --set userArtifacts.image=tmiddlet/rolling-upgrade-sample:2.0.0
+   ```              
+   
+1. Check the status of the upgrade.
+
+   Use the following command to check the status of the rolling upgrade of all pods.
+
+   > **Note**: The command below will not return until upgrade of all pods is complete.
+
+   ```bash
+   kubectl rollout status sts/storage-${NAMESPACE}-coherence --namespace $NAMESPACE
+   Waiting for 1 pods to be ready...
+   Waiting for 1 pods to be ready...
+   waiting for statefulset rolling update to complete 1 pods at revision storage-...coherence...
+   Waiting for 1 pods to be ready...
+   Waiting for 1 pods to be ready...
+   waiting for statefulset rolling update to complete 2 pods at revision storage-...coherence...
+   Waiting for 1 pods to be ready...
+   Waiting for 1 pods to be ready...
+   statefulset rolling update complete 3 pods at revision storage-...coherence...
+   ```
+
+1. Verify the data through CohQL commands.
+
+   When the upgrade is running, you can re-run CohQL and execute the following commands in the CohQL session:
+
+   ```sql
+   select key(), value() from 'test';
+   ```
+
+   You can note that the data always remains the same.
+
+   > **Note**: Your port-forward fails when the storage-$NAMESPACE-coherence-0` pod restarts. 
+   > You have to restart it.
+
+   In an environment where you have configured a load balancer, then the Coherence*Extend 
+   session automatically reconnects when it detects a disconnect.
+
+1. Add new data to confirm the interceptor is now active.  
+
+   ```sql
+   insert into 'test' key('key-3') value('value-3');
+
+   select key(), value() from 'test';
+   Results
+   ["key-1", "value-1"]
+   ["key-3", "VALUE-3"]
+   ["key-2", "value-2"]
+   ```
+
+   You can note that the value for `key-3` has been converted to uppercase which shows that the server-side interceptor is now active.
+
+1. Verify that the 2.0.0 image on one of the pods.
+
+   Use the following command to verify that the 2.0.0 image is active:
+
+   ```bash
+   kubectl describe pod storage-${NAMESPACE}-coherence-0  -n $NAMESPACE| grep rolling-upgrade
+   ```
+   ```console
+   Image:         rolling-upgrade-sample:2.0.0
+   Normal  Pulled                 4m59s  kubelet, docker-for-desktop  Container image "rolling-upgrade-sample:2.0.0" already present on machine
+   ```
+
+   The output shows that the version 2.0.0 image is now present.  
+  
+
+1. Uninstall the Coherence Charts
+
+   ```bash
+   helm delete storage-${NAMESPACE} --purge
+   ```        
+   
+1. Ensure you stop the HTTP port-forward commands using `CTRL-C`.  
+                                           
 
 
