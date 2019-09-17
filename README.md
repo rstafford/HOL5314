@@ -26,8 +26,6 @@ After initial clone of the repository, carry out the following to setup your env
    
 1. Create a namespace using the user number assigned to you. The `NAMESPACE` environment variable has been set in the `. ./setenv.sh` step above. 
 
-   E.g. for user `01`:
-   
    ```bash
    kubectl create namespace $NAMESPACE
    ```
